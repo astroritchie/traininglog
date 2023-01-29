@@ -12,7 +12,7 @@ app_ui <- function(request) {
     dashboardPage(
       header = dashboardHeader(
         title = dashboardBrand(
-          title = "My dashboard",
+          title = "Training Log Dashboard",
           color = "primary",
           href = "https://adminlte.io/themes/v3",
           image = "https://adminlte.io/themes/v3/dist/img/AdminLTELogo.png"
