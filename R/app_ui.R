@@ -2,15 +2,30 @@
 #'
 #' @param request Internal parameter for `{shiny}`.
 #'     DO NOT REMOVE.
-#' @import shiny
+#' @import shiny golem bs4Dash
 #' @noRd
 app_ui <- function(request) {
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic
-    fluidPage(
-      h1("traininglog")
+    dashboardPage(
+      header = dashboardHeader(
+        title = dashboardBrand(
+          title = "My dashboard",
+          color = "primary",
+          href = "https://adminlte.io/themes/v3",
+          image = "https://adminlte.io/themes/v3/dist/img/AdminLTELogo.png"
+        )
+      ),
+      sidebar = dashboardSidebar(),
+      body = dashboardBody(
+        lapply(getAdminLTEColors(), function(color) {
+          box(status = color)
+        })
+      ),
+      controlbar = dashboardControlbar(),
+      title = "DashboardPage"
     )
   )
 }
