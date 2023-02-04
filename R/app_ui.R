@@ -2,7 +2,7 @@
 #'
 #' @param request Internal parameter for `{shiny}`.
 #'     DO NOT REMOVE.
-#' @import shiny golem bs4Dash
+#' @import golem shiny bs4Dash DT
 #' @noRd
 app_ui <- function(request) {
   tagList(
@@ -13,19 +13,16 @@ app_ui <- function(request) {
       header = dashboardHeader(
         title = dashboardBrand(
           title = "Training Log",
-          color = "danger",
-          href = "https://adminlte.io/themes/v3",
-          image = "https://adminlte.io/themes/v3/dist/img/AdminLTELogo.png"
         )
       ),
       sidebar = dashboardSidebar(),
       body = dashboardBody(
-        lapply(getAdminLTEColors(), function(color) {
-          box(status = color)
-        })
+        DT::dataTableOutput('workoutTable'),
+        actionButton("addButton", "Add row", icon = icon('plus')),
+        actionButton("delButton", "Remove row(s)", icon = icon('minus'))
       ),
       controlbar = dashboardControlbar(),
-      title = "DashboardPage"
+      title = "Training Log"
     )
   )
 }
