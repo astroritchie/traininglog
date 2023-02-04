@@ -16,15 +16,17 @@ app_ui <- function(request) {
         )
       ),
       sidebar = dashboardSidebar(
-        bookmarkButton()
+        disable = TRUE
       ),
       body = dashboardBody(
-        DT::dataTableOutput('workoutTable'),
+        DT::dataTableOutput('workoutTable', width = '85%'),
         actionButton("addButton", "Add row", icon = icon('plus')),
         actionButton("dupeButton", "Duplicate selected row(s)", icon = icon('plus')),
         actionButton("delButton", "Remove selected row(s)", icon = icon('minus'))
       ),
-      controlbar = dashboardControlbar(),
+      controlbar = dashboardControlbar(
+        bookmarkButton()
+      ),
       title = "Training Log"
     )
   )

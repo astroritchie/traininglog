@@ -56,13 +56,43 @@ app_server <- function(input, output, session) {
     rv_table(t)
   })
 
+  js <- c(
+    "table.on('key', function(e, datatable, key, cell, originalEvent){",
+    "  var targetName = originalEvent.target.localName;",
+    "  if(key == 13 && targetName == 'body'){",
+    "    $(cell.node()).trigger('dblclick.dt');",
+    "  }",
+    "});",
+    "table.on('keydown', function(e){",
+    "  if(e.target.localName == 'input' && [9,13,37,38,39,40].indexOf(e.keyCode) > -1){",
+    "    $(e.target).trigger('blur');",
+    "  }",
+    "});",
+    "table.on('key-focus', function(e, datatable, cell, originalEvent){",
+    "  var targetName = originalEvent.target.localName;",
+    "  var type = originalEvent.type;",
+    "  if(type == 'keydown' && targetName == 'input'){",
+    "    if([9,37,38,39,40].indexOf(originalEvent.keyCode) > -1){",
+    "      $(cell.node()).trigger('dblclick.dt');",
+    "    }",
+    "  }",
+    "});"
+  )
+
+
   output$workoutTable <- DT::renderDataTable({
     datatable(
       rv_table(),
       editable = TRUE,
       selection = 'multiple',
       rownames = FALSE,
-      width = '80%')
+      width = '80%',
+      callback = JS(js),
+      options = list(
+        keys = TRUE
+        ),
+      extensions = "KeyTable"
+      )
   })
 
 }
