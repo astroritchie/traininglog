@@ -19,7 +19,7 @@ app_server <- function(input, output, session) {
   rv_table <- reactiveVal(blankrow)
 
   observeEvent(input$workoutTable_cell_edit, {
-    rv_table(editData(rv_table(), input$workoutTable_cell_edit, 'workoutTable'))
+    rv_table(editData(rv_table(), input$workoutTable_cell_edit, 'workoutTable', rownames = FALSE))
   })
 
   observeEvent(input$addButton, {
@@ -33,6 +33,17 @@ app_server <- function(input, output, session) {
         Notes = '')
 
     rv_table(t)
+  })
+
+  observeEvent(input$dupeButton, {
+    t <- rv_table()
+
+    if (!is.null(input$workoutTable_rows_selected)) {
+
+      t <- rbind(t, t[as.numeric(input$workoutTable_rows_selected),])
+    }
+    rv_table(t)
+
   })
 
   observeEvent(input$delButton, {
@@ -49,7 +60,9 @@ app_server <- function(input, output, session) {
     datatable(
       rv_table(),
       editable = TRUE,
-      selection = 'multiple')
+      selection = 'multiple',
+      rownames = FALSE,
+      width = '80%')
   })
 
 }
