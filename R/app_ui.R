@@ -22,7 +22,8 @@ app_ui <- function(request) {
         DT::dataTableOutput('workoutTable', width = '85%'),
         actionButton("addButton", "Add row", icon = icon('plus')),
         actionButton("dupeButton", "Duplicate selected row(s)", icon = icon('plus')),
-        actionButton("delButton", "Remove selected row(s)", icon = icon('minus'))
+        actionButton("delButton", "Remove selected row(s)", icon = icon('minus')),
+        fileInput("importButton", "Import program")
       ),
       controlbar = dashboardControlbar(
         bookmarkButton()

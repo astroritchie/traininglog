@@ -11,6 +11,7 @@ app_server <- function(input, output, session) {
     Exercise = character(),
     Sets = character(),
     Reps = character(),
+    Intensity = character(),
     Load = character(),
     RPE = character(),
     Notes = character()
@@ -28,6 +29,7 @@ app_server <- function(input, output, session) {
         Exercise = '',
         Sets = '',
         Reps = '',
+        Intensity = '',
         Load = '',
         RPE = '',
         Notes = '')
@@ -54,6 +56,14 @@ app_server <- function(input, output, session) {
       t <- t[-as.numeric(input$workoutTable_rows_selected),]
     }
     rv_table(t)
+  })
+
+  observeEvent(input$importButton, {
+
+    t <- rv_table()
+
+    rv_table(read_program(input$importButton$datapath))
+
   })
 
   js <- c(
